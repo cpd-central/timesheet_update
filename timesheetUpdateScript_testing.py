@@ -86,8 +86,8 @@ for j,user in enumerate(users):
                     count_days += 1
                     dates_for_month.append(day)
             else: 
-                print('in else') 
                 count_days = 14 - count_days  
+                print(count_days) 
                 for h in range(count_days + 1, -1, -1):
                     #print(h) 
                     date = date_previous + relativedelta(day=31)        ##This gives the last date in the month.
