@@ -5,13 +5,14 @@ import datetime
 import importlib
 from dateutil.relativedelta import relativedelta
 
-client = MongoClient('mongodb://192.168.99.110:9999/CEG_PROJECTS_TESTING')
-db = client['CEG_PROJECTS_TESTING']
+client = MongoClient('mongodb://192.168.99.100:9999/heroku_bmf11mmv')
+db = client['heroku_bmf11mmv']
 
 coll = db['timesheets']
 coll_users = db['users']
 
-now = datetime.datetime(2019, 9, 8)
+#now = datetime.datetime(2019, 9, 15)
+now = datetime.datetime.today()
 
 year = now.year
 first_payperiod_end = datetime.datetime(2019, 8, 25)
@@ -45,8 +46,8 @@ data = pd.DataFrame(list(coll.find()))
 #get the users column from the dataframe
 users = data['user']
 
-email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jjm64//OneDrive//Desktop//timesheet_test_folder//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": f"C://Users//jjm64//OneDrive//Desktop//timesheet_test_folder//MarsnikJ.xls"}
+email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls"}
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
               9:"9-September", 10:"10-October", 11:"11-November", 12:"12-December"}
@@ -264,6 +265,7 @@ for j, user in enumerate(users):
     #run the submit pay period if it's two weeks from the first pay period date 
     if pay_period_sent == False: 
         print('pay period has not been sent')
+        print(pay_period_total) 
         if pay_period_total >= 80: 
             macro = wb.macro('Sendpayperiodsummary') 
             macro() 
@@ -279,7 +281,10 @@ for j, user in enumerate(users):
     wb.save()       #Saves the Spreadsheets.
     print(f"{user} complete")
 
-app.quit()          #Closes Excel
-
-
+try:
+    app.quit()          #Closes Excel
+except NameError:
+    print('all timesheets sent')
+except:
+    print('unknown error!')
 
