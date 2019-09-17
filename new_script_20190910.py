@@ -11,8 +11,9 @@ db = client['heroku_bmf11mmv']
 coll = db['timesheets']
 coll_users = db['users']
 
-#now = datetime.datetime(2019, 9, 15)
+
 now = datetime.datetime.today()
+now = datetime.datetime(2019, 9, 22)
 
 year = now.year
 first_payperiod_end = datetime.datetime(2019, 8, 25)
@@ -47,7 +48,8 @@ data = pd.DataFrame(list(coll.find()))
 users = data['user']
 
 email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls"}
+                        "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls",
+                        "tuser@ceg.mn": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DuncanR.xls"}
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
               9:"9-September", 10:"10-October", 11:"11-November", 12:"12-December"}
