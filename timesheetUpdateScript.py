@@ -47,12 +47,15 @@ data = pd.DataFrame(list(coll.find()))
 #get the users column from the dataframe
 users = data['user']
 
-email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//MarsnikJ.xls",
-                        "rduncan@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//DuncanR.xls",
-                        "cdolan@ceg.mn": f"C://Users//jmarsnik//Desktop//DolanC.xls",
-                        "kburk@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//BurkK.xls",
-                        "mkaas@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//KaasM.xls"}
+"""
+email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls",
+                        "rduncan@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DuncanR.xls",
+                        "cdolan@ceg.mn": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DolanC.xls",
+                        "kburk@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//BurkK.xls",
+                        "mkaas@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//KaasM.xls"}
+"""
+email_timesheet_dict = {"jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls"}
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
               9:"9-September", 10:"10-October", 11:"11-November", 12:"12-December"}
@@ -67,22 +70,7 @@ last_pay_period_end = most_recent_pay_period_end - datetime.timedelta(days=14)
 if last_pay_period_end.month != now.month:
     sheets.append(sheets_dict[last_pay_period_end.month])
 
-for j, user in enumerate(users):
-    if user not in email_timesheet_dict:
-        #if this user does not exist in our dictionary, go to next iteration 
-        continue
-    #get whether or not the pay period has been sent for this user
-    pay_period_sent = data['pay_period_sent'][data['user'] == user].values[0]
-    if pay_period_sent:
-        #if  now.day != 1:
-            #if the pay period has been sent, and it is not the first of the month we go to the next user
-        continue
-        #else:
-            #print('pay period has been sent but it is the first of the month so we gotta run it')
-    #if not, we open the workbook and enter/submit
-    wb = xw.Book(email_timesheet_dict[user])
-    app = xw.apps.active
-
+def write_to_spreadsheet(wb, sheets):
     #set the pay period total to 0
     pay_period_total = 0
     for sheet in sheets:
@@ -267,23 +255,42 @@ for j, user in enumerate(users):
                                                     sht.range(f"A{row}").value = desc
                                                     sht.range(f"AL{row}").value = code
                                                 break
-                #print(f"{sheet} {code} complete")
-    
-    #run the submit pay period if it's two weeks from the first pay period date 
-    if pay_period_sent == False: 
-        print('pay period has not been sent')
-        print(pay_period_total) 
-        if pay_period_total >= 80: 
-            macro = wb.macro('Sendpayperiodsummary') 
-            macro() 
-            print('pay period has been sent')
-            coll.update_one({'user': user}, {'$set': {'pay_period_sent': True}})
-        else:
-            print('timesheet needs finishing')
+    return pay_period_total 
+
+def check_and_send(wb, pay_period_total, user):
+    print('pay period has not been sent')
+    print(pay_period_total) 
+    if pay_period_total >= 80: 
+        macro = wb.macro('Sendpayperiodsummary') 
+        macro() 
+        print('pay period has been sent')
+        coll.update_one({'user': user}, {'$set': {'pay_period_sent': True}})
     else:
-        pay_period_sent = data[data['user'] == user]['pay_period_sent'].values[0]
-        if pay_period_sent == False:
-            print('hi')
+        print('timesheet needs finishing')
+    
+    return None 
+
+for j, user in enumerate(users):
+    if user not in email_timesheet_dict:
+        #if this user does not exist in our dictionary, go to next iteration 
+        continue
+    #get whether or not the pay period has been sent for this user
+    pay_period_sent = data['pay_period_sent'][data['user'] == user].values[0]
+    wb = xw.Book(email_timesheet_dict[user])
+    app = xw.apps.active
+    if now.day != 1:
+        if pay_period_sent:
+            #if it isn't the first of the month and the pay period has been sent, simply continue to next user 
+            print('not the first of the month and the pay period has already been sent') 
+        else:
+            #if pay period has NOT been sent, we try to send it. 
+            pay_period_total = write_to_spreadsheet(wb, sheets) 
+            check_and_send(wb, pay_period_total, user) 
+    else:
+        print('first of month') 
+        #if it is the first of the month, we want to write to the spreadsheet, and send the timesheet if it hasn't been sent yet
+        pay_period_total = write_to_spreadsheet(wb, sheets)
+        check_and_send(wb, pay_period_total, user)
 
     wb.save()       #Saves the Spreadsheets.
     print(f"{user} complete")
