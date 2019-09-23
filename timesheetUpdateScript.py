@@ -14,7 +14,7 @@ coll_users = db['users']
 
 
 now = datetime.datetime.today()
-
+now = datetime.datetime(2019, 10, 1)
 year = now.year
 first_payperiod_end = datetime.datetime(2019, 8, 25)
 
@@ -47,15 +47,15 @@ data = pd.DataFrame(list(coll.find()))
 #get the users column from the dataframe
 users = data['user']
 
-
+"""
 email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls",
                         "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls",
                         "rduncan@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DuncanR.xls",
                         "cdolan@ceg.mn": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DolanC.xls",
                         "kburk@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//BurkK.xls",
                         "mkaas@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//KaasM.xls"}
-
-#email_timesheet_dict = {"jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls"}
+"""
+email_timesheet_dict = {"jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls"}
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
               9:"9-September", 10:"10-October", 11:"11-November", 12:"12-December"}
@@ -290,7 +290,10 @@ for j, user in enumerate(users):
         print('first of month') 
         #if it is the first of the month, we want to write to the spreadsheet, and send the timesheet if it hasn't been sent yet
         pay_period_total = write_to_spreadsheet(wb, sheets)
-        check_and_send(wb, pay_period_total, user)
+        if pay_period_sent:
+            pass
+        else: 
+            check_and_send(wb, pay_period_total, user)
 
     wb.save()       #Saves the Spreadsheets.
     print(f"{user} complete")
