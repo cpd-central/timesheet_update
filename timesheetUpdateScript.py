@@ -5,8 +5,7 @@ import datetime
 import importlib
 from dateutil.relativedelta import relativedelta
 
-#client = MongoClient('mongodb://heroku_bmf11mmv:i6ge501vjrvdv804685mrlhmkf@ds259207.mlab.com:59207/heroku_bmf11mmv')
-client = MongoClient('mongodb://192.168.99.100:9999')
+client = MongoClient('mongodb://heroku_bmf11mmv:i6ge501vjrvdv804685mrlhmkf@ds259207.mlab.com:59207/heroku_bmf11mmv')
 db = client['heroku_bmf11mmv']
 
 coll = db['timesheets']
@@ -48,14 +47,13 @@ data = pd.DataFrame(list(coll.find()))
 users = data['user']
 
 
-email_timesheet_dict = {"speichel@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls",
-                        "rduncan@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DuncanR.xls",
-                        "cdolan@ceg.mn": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//DolanC.xls",
-                        "kburk@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//BurkK.xls",
-                        "mkaas@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//KaasM.xls"}
+email_timesheet_dict = {"speichel@ceg-engineers.com": f"H://CEG Timesheets//{year}//PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": f"H://CEG Timesheets//{year}//MarsnikJ.xls",
+                        "rduncan@ceg-engineers.com": f"H://CEG Timesheets//{year}//DuncanR.xls",
+                        "cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
+                        "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
+                        "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls"}
 
-#email_timesheet_dict = {"jmarsnik@ceg-engineers.com": f"C://Users//jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls"}
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
               9:"9-September", 10:"10-October", 11:"11-November", 12:"12-December"}
