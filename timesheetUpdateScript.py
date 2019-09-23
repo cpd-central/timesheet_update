@@ -13,7 +13,7 @@ coll_users = db['users']
 
 
 now = datetime.datetime.today()
-now = datetime.datetime(2019, 10, 1)
+
 year = now.year
 first_payperiod_end = datetime.datetime(2019, 8, 25)
 
