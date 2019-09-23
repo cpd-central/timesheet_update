@@ -13,7 +13,7 @@ coll_users = db['users']
 
 
 now = datetime.datetime.today()
-
+now = datetime.datetime(2019, 10, 1)
 year = now.year
 first_payperiod_end = datetime.datetime(2019, 8, 25)
 
@@ -288,7 +288,10 @@ for j, user in enumerate(users):
         print('first of month') 
         #if it is the first of the month, we want to write to the spreadsheet, and send the timesheet if it hasn't been sent yet
         pay_period_total = write_to_spreadsheet(wb, sheets)
-        check_and_send(wb, pay_period_total, user)
+        if pay_period_sent:
+            pass
+        else: 
+            check_and_send(wb, pay_period_total, user)
 
     wb.save()       #Saves the Spreadsheets.
     print(f"{user} complete")
