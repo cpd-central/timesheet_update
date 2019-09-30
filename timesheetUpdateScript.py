@@ -17,6 +17,16 @@ now = datetime.datetime.today()
 year = now.year
 first_payperiod_end = datetime.datetime(2019, 8, 25)
 
+
+def is_last_day_of_month(today):
+    today_month = today.month
+    tomorrow = today + datetime.timedelta(1) 
+    tomorrow_month = tomorrow.month
+    if tomorrow_month != today_month:
+        return True
+    else:
+        return False
+
 def is_pay_period_due(today):
     time_difference = (today - first_payperiod_end).days 
     if time_difference % 14 == 0:
@@ -35,6 +45,8 @@ def get_closest_pay_period(today):
     return most_recent 
 
 pay_period_due = is_pay_period_due(now)
+is_last_day_of_month = is_last_day_of_month(now)
+
 
 if pay_period_due:
     #if we are at the pay period end, we set everyone's sent status to False 
@@ -52,7 +64,26 @@ email_timesheet_dict = {"speichel@ceg-engineers.com": f"H://CEG Timesheets//{yea
                         "rduncan@ceg-engineers.com": f"H://CEG Timesheets//{year}//DuncanR.xls",
                         "cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
                         "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
-                        "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls"}
+                        "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
+                        "bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
+                        "mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
+                        "dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
+                        "ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
+                        "rbuckingham@ceg-engineers.com": f"H://CEG Timesheets//{year}//BuckinghamR.xls",
+                        "jcasanova@ceg-engineers.com": f"H://CEG Timesheets//{year}//CasanovaJ.xls",
+                        "schowdhary@ceg-engineers.com": f"H://CEG Timesheets//{year}//ChowdharyS.xls",
+                        "vince@ceg.mn": f"H://CEG Timesheets//{year}//GranquistV.xls",
+                        "nguddeti@ceg-engineers.com": f"H://CEG Timesheets//{year}//GuddetiN.xls",
+                        "siqbal@ceg-engineers.com": f"H://CEG Timesheets//{year}//IqbalS.xls",
+                        "ajama@ceg-engineers.com": f"H://CEG Timesheets//{year}//JamaA.xls",
+                        "skatz@ceg-engineers.com": f"H://CEG Timesheets//{year}//KatzS.xls",
+                        "pmalamen@ceg-engineers.com": f"H://CEG Timesheets//{year}//MalamenP.xls",
+                        "jmitchell@ceg-engineers.com": f"H://CEG Timesheets//{year}//MitchellJ.xls",
+                        "ntmoe@ceg.mn": f"H://CEG Timesheets//{year}//MoeN.xls",
+                        "jromero@ceg-engineers.com": f"H://CEG Timesheets//{year}//RomeroJ.xls",
+                        "dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
+                        "turban@ceg-engineers.com": f"H://CEG Timesheets//{year}//UrbanT.xls",
+                        "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls"}
 
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
@@ -68,7 +99,7 @@ last_pay_period_end = most_recent_pay_period_end - datetime.timedelta(days=14)
 if last_pay_period_end.month != now.month:
     sheets.append(sheets_dict[last_pay_period_end.month])
 
-def write_to_spreadsheet(wb, sheets):
+def write_to_spreadsheet(wb, sheets, month_end):
     #set the pay period total to 0
     pay_period_total = 0
     for sheet in sheets:
@@ -93,7 +124,10 @@ def write_to_spreadsheet(wb, sheets):
              #get the days you will be dealing with for the current sheet. This is needed so it knows how many days in each month to update.
             dates_for_month = []
             if sheet == sheets_dict[now.month]:
-                month_day = most_recent_pay_period_end.day
+                if month_end: 
+                    month_day = now.day
+                else:
+                    month_day = most_recent_pay_period_end.day
                 for i in range(0,14):
                     day = month_day - i
                     if day < 1:
@@ -276,22 +310,32 @@ for j, user in enumerate(users):
     pay_period_sent = data['pay_period_sent'][data['user'] == user].values[0]
     wb = xw.Book(email_timesheet_dict[user])
     app = xw.apps.active
-    if now.day != 1:
-        if pay_period_sent:
-            #if it isn't the first of the month and the pay period has been sent, simply continue to next user 
-            print('not the first of the month and the pay period has already been sent') 
-        else:
-            #if pay period has NOT been sent, we try to send it. 
-            pay_period_total = write_to_spreadsheet(wb, sheets) 
-            check_and_send(wb, pay_period_total, user) 
+
+    #we write to the spreadsheet and get the total regardless of the day
+    pay_period_total = write_to_spreadsheet(wb, sheets, is_last_day_of_month)
+    if pay_period_sent:
+        print('pay period sent') 
+        pass
     else:
-        print('first of month') 
-        #if it is the first of the month, we want to write to the spreadsheet, and send the timesheet if it hasn't been sent yet
-        pay_period_total = write_to_spreadsheet(wb, sheets)
-        if pay_period_sent:
-            pass
-        else: 
-            check_and_send(wb, pay_period_total, user)
+        check_and_send(wb, pay_period_total, user)
+    
+    #if not is_last_day_of_month:
+    #    if pay_period_sent:
+    #        #if it isn't the first of the month and the pay period has been sent, simply continue to next user 
+    #        print('not the first of the month and the pay period has already been sent') 
+    #        pay_period_total = write_to_spreadsheet(wb, sheets) 
+    #    else:
+    #        #if pay period has NOT been sent, we try to send it. 
+    #        pay_period_total = write_to_spreadsheet(wb, sheets) 
+    #        check_and_send(wb, pay_period_total, user) 
+    #else:
+    #    print('last day of month') 
+    #    #if it is the first of the month, we want to write to the spreadsheet, and send the timesheet if it hasn't been sent yet
+    #    pay_period_total = write_to_spreadsheet(wb, sheets)
+    #    if pay_period_sent:
+    #        pass
+    #    else: 
+    #        check_and_send(wb, pay_period_total, user)
 
     wb.save()       #Saves the Spreadsheets.
     print(f"{user} complete")
