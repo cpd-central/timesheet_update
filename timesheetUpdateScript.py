@@ -124,7 +124,7 @@ def write_to_spreadsheet(wb, sheets, month_end):
              #get the days you will be dealing with for the current sheet. This is needed so it knows how many days in each month to update.
             dates_for_month = []
             if sheet == sheets_dict[now.month]:
-                if month_end: 
+                if month_end or (now.day == 1): 
                     month_day = now.day
                 else:
                     month_day = most_recent_pay_period_end.day
