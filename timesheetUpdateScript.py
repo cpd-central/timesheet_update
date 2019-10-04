@@ -7,7 +7,8 @@ from dateutil.relativedelta import relativedelta
 
 #client = MongoClient('mongodb://heroku_bmf11mmv:i6ge501vjrvdv804685mrlhmkf@ds259207.mlab.com:59207/heroku_bmf11mmv')
 client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
-db = client['heroku_bmf11mmv']
+#db = client['heroku_bmf11mmv']
+db = client['heroku_0qcgxhh9']
 
 coll = db['timesheets']
 coll_users = db['users']
