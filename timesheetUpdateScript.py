@@ -67,7 +67,7 @@ email_timesheet_dict = {"speichel@ceg-engineers.com": f"H://CEG Timesheets//{yea
                         "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
                         "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
                         "bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
-                        "mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
+                        #"mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
                         "dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
                         "ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
                         "rbuckingham@ceg-engineers.com": f"H://CEG Timesheets//{year}//BuckinghamR.xls",
@@ -82,7 +82,7 @@ email_timesheet_dict = {"speichel@ceg-engineers.com": f"H://CEG Timesheets//{yea
                         "jmitchell@ceg-engineers.com": f"H://CEG Timesheets//{year}//MitchellJ.xls",
                         "ntmoe@ceg.mn": f"H://CEG Timesheets//{year}//MoeN.xls",
                         "jromero@ceg.mn": f"H://CEG Timesheets//{year}//RomeroJ.xls",
-                        "dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
+                        #"dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
                         "turban@ceg-engineers.com": f"H://CEG Timesheets//{year}//UrbanT.xls",
                         "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls"}
 
