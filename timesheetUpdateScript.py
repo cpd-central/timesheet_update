@@ -60,14 +60,15 @@ data = pd.DataFrame(list(coll.find()))
 #get the users column from the dataframe
 users = data['user']
 
-email_timesheet_dict = {"speichel@ceg-engineers.com": f"H://CEG Timesheets//{year}//PeichelS.xls",
+email_timesheet_dict = {
+                        "speichel@ceg-engineers.com": f"H://CEG Timesheets//{year}//PeichelS.xls",
                         "jmarsnik@ceg-engineers.com": f"H://CEG Timesheets//{year}//MarsnikJ.xls",
                         "rduncan@ceg-engineers.com": f"H://CEG Timesheets//{year}//DuncanR.xls",
                         "cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
                         "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
                         "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
-                        "bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
-                        #"mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
+                        #"bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
+                        "mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
                         "dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
                         "ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
                         "rbuckingham@ceg-engineers.com": f"H://CEG Timesheets//{year}//BuckinghamR.xls",
@@ -84,7 +85,8 @@ email_timesheet_dict = {"speichel@ceg-engineers.com": f"H://CEG Timesheets//{yea
                         "jromero@ceg.mn": f"H://CEG Timesheets//{year}//RomeroJ.xls",
                         #"dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
                         "turban@ceg-engineers.com": f"H://CEG Timesheets//{year}//UrbanT.xls",
-                        "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls"}
+                        "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls"
+                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com"] 
 
@@ -214,6 +216,7 @@ def write_to_spreadsheet(wb, sheets, month_end):
 
             ##this gets rid of code thats not in the database and also wipes all the columns because they'll be reinserted.
             for m,el in enumerate(expensed_labor):
+                print(row_index_dict) 
                 if m < 12 or (m == row_index_dict['Billable Projects: ↓'] - 5): #m == 19    
                     #print(el)
                     continue
