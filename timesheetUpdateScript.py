@@ -128,10 +128,7 @@ def write_to_spreadsheet(wb, sheets, month_end):
              #get the days you will be dealing with for the current sheet. This is needed so it knows how many days in each month to update.
             dates_for_month = []
             if sheet == sheets_dict[now.month]:
-                if month_end or (now.day == 1): 
-                    month_day = now.day
-                else:
-                    month_day = most_recent_pay_period_end.day
+                month_day = now.day
                 for i in range(0,14):
                     day = month_day - i
                     if day < 1:
@@ -216,7 +213,7 @@ def write_to_spreadsheet(wb, sheets, month_end):
 
             ##this gets rid of code thats not in the database and also wipes all the columns because they'll be reinserted.
             for m,el in enumerate(expensed_labor):
-                print(row_index_dict) 
+                #print(row_index_dict) 
                 if m < 12 or (m == row_index_dict['Billable Projects: ↓'] - 5): #m == 19    
                     #print(el)
                     continue
