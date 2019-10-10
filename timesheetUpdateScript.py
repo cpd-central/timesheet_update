@@ -67,7 +67,7 @@ email_timesheet_dict = {
                         "cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
                         "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
                         "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
-                        #"bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
+                        "bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
                         "mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
                         "dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
                         "ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
@@ -88,7 +88,7 @@ email_timesheet_dict = {
                         "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls"
                         }
 
-part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com"] 
+part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
 
 sheets_dict = {1: "1-January", 2: "2-February", 3: "3-March", 4: "4-April", 5: "5-May", 6:"6-June", 7:"7-July", 8:"8-August",\
               9:"9-September", 10:"10-October", 11:"11-November", 12:"12-December"}
