@@ -1,10 +1,10 @@
 #email as key, tuple of timesheet path and phone number as value
 def get_dictionary(year):
     email_phone_timesheet_dict = {
-        "speichel@ceg-engineers.com": (f"H://CEG Timesheets//{year}//PeichelS.xls", None),
+        "speichel@ceg-engineers.com": (f"H://CEG Timesheets//{year}//PeichelS.xls", "+16127430136"),
         "jmarsnik@ceg-engineers.com": (f"H://CEG Timesheets//{year}//MarsnikJ.xls", "+17158299927"),
         "rduncan@ceg-engineers.com": (f"H://CEG Timesheets//{year}//DuncanR.xls", None),
-        "cdolan@ceg.mn": (f"H://CEG Timesheets//{year}//DolanC.xls", None),
+        "cdolan@ceg.mn": (f"H://CEG Timesheets//{year}//DolanC.xls", "+15076763319"),
         "kburk@ceg-engineers.com": (f"H://CEG Timesheets//{year}//BurkK.xls", None),
         "mkaas@ceg-engineers.com": (f"H://CEG Timesheets//{year}//KaasM.xls", None),
         "bahlsten@ceg-engineers.com": (f"H://CEG Timesheets//{year}//AhlstenB.xls", None),
@@ -32,10 +32,10 @@ def get_dictionary(year):
 
 def get_dictionary_develop(year):
     email_phone_timesheet_dict_develop = {
-        "speichel@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls", None),
+        "speichel@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls", "+16127430136"),
         "jmarsnik@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls", "+17158299927"),
         "rduncan@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//DuncanR.xls", None),
-        "cdolan@ceg.mn": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//DolanC.xls", None),
+        "cdolan@ceg.mn": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//DolanC.xls", "+15076763319"),
         "kburk@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//BurkK.xls", None),
         "mkaas@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//KaasM.xls", None),
         "bahlsten@ceg-engineers.com": ("C://Users/jmarsnik//Desktop//timesheet_test_folder//AhlstenB.xls", None),
