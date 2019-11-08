@@ -1,12 +1,13 @@
 from twilio.rest import Client
 import datetime
 import email_phone_timesheet
+from config import twilio_sid, twilio_token
 
 year = datetime.datetime.today().year
 
 email_phone_timesheet_dict = email_phone_timesheet.get_dictionary_develop(year)
 
-client = Client("AC3ce1b367bfec1583fb2659f3e24670d7", "d566c629985661e14fc153d897fbe5a2")
+client = Client(twilio_sid, twilio_token)
 twilio_phone_number = "+12029198514"
 
 for user in email_phone_timesheet_dict:
