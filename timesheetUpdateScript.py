@@ -185,6 +185,7 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         sht = wb.sheets[sheet]
         if sht.range('AF69').value == 'Complete':
             print(f"{sheet} is protected and cannot be written to.")
+            continue 
         else:
             #if the sheet isn't protected, we start writing to it
             #this dictionary will store all of the hours for each project, where the hours dictionary is the value
