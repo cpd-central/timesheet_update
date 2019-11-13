@@ -1,1 +1,5 @@
+#vim stuff
+*.un~
+*~
+
 config.py
