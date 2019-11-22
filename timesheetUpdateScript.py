@@ -297,21 +297,21 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                     if code_desc == ('CEG', 'Holiday'):
                         sht.range(f"{letters_to_numbers_dict[date_index]}{holiday_row}").value = hours    
                         #decrement row count so we overwrite this row on next iteration
-                        if row_count >= 17:
+                        if row_count >= 18:
                             #if we're at 17 or higher, we want to bump it down 1 
                             row_count -= 1 
                         else:
                             #if row count is less than 17, we want to put it at 16, so that the row_count += 1 later will bring us back to 17 
-                            row_count = 16
+                            row_count = 17
                     elif code_desc == ('CEG', 'PTO'):
                         sht.range(f"{letters_to_numbers_dict[date_index]}{pto_row}").value = hours
                         #decrement row count so we overwrite this row on next iteration
-                        if row_count >= 17:
+                        if row_count >= 18:
                             #if we're at 17 or higher, we want to bump it down 1 
                             row_count -= 1 
                         else:
                             #if row count is less than 17, we want to put it at 16, so that the row_count += 1 later will bring us back to 17 
-                            row_count = 16                   
+                            row_count = 17                   
                     else: 
                         sht.range(f"{letters_to_numbers_dict[date_index]}{row_count}").value = hours 
                     #now we match this with our mapping from above to find out which column to put it in in excel
