@@ -121,32 +121,32 @@ users = data['user']
 
 
 email_timesheet_dict = {
-                        "speichel@ceg-engineers.com": f"H://CEG Timesheets//{year}//PeichelS.xls",
+                        #"speichel@ceg-engineers.com": f"H://CEG Timesheets//{year}//PeichelS.xls",
                         "jmarsnik@ceg-engineers.com": f"H://CEG Timesheets//{year}//MarsnikJ.xls",
-                        "rduncan@ceg-engineers.com": f"H://CEG Timesheets//{year}//DuncanR.xls",
-                        "cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
-                        "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
-                        "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
-                        "bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
-                        "mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
-                        "dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
-                        "ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
-                        "rbuckingham@ceg-engineers.com": f"H://CEG Timesheets//{year}//BuckinghamR.xls",
-                        "jcasanova@ceg-engineers.com": f"H://CEG Timesheets//{year}//CasanovaJ.xls",
-                        "schowdhary@ceg-engineers.com": f"H://CEG Timesheets//{year}//ChowdharyS.xls",
-                        "vince@ceg.mn": f"H://CEG Timesheets//{year}//GranquistV.xls",
-                        "nguddeti@ceg-engineers.com": f"H://CEG Timesheets//{year}//GuddetiN.xls",
-                        "siqbal@ceg-engineers.com": f"H://CEG Timesheets//{year}//IqbalS.xls",
-                        "ajama@ceg-engineers.com": f"H://CEG Timesheets//{year}//JamaA.xls",
-                        "skatz@ceg-engineers.com": f"H://CEG Timesheets//{year}//KatzS.xls",
-                        "pmalamen@ceg-engineers.com": f"H://CEG Timesheets//{year}//MalamenP.xls",
-                        "jmitchell@ceg-engineers.com": f"H://CEG Timesheets//{year}//MitchellJ.xls",
-                        "ntmoe@ceg.mn": f"H://CEG Timesheets//{year}//MoeN.xls",
-                        "jromero@ceg.mn": f"H://CEG Timesheets//{year}//RomeroJ.xls",
-                        "dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
-                        "turban@ceg-engineers.com": f"H://CEG Timesheets//{year}//UrbanT.xls",
-                        "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls",
-                        "mtuma@ceg-engineers.com": f"H://CEG Timesheets//{year}//TumaM.xls"
+                        #"rduncan@ceg-engineers.com": f"H://CEG Timesheets//{year}//DuncanR.xls",
+                        #"cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
+                        #"kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
+                        #"mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
+                        #"bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
+                        #"mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
+                        #"dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
+                        #"ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
+                        #"rbuckingham@ceg-engineers.com": f"H://CEG Timesheets//{year}//BuckinghamR.xls",
+                        #"jcasanova@ceg-engineers.com": f"H://CEG Timesheets//{year}//CasanovaJ.xls",
+                        #"schowdhary@ceg-engineers.com": f"H://CEG Timesheets//{year}//ChowdharyS.xls",
+                        #"vince@ceg.mn": f"H://CEG Timesheets//{year}//GranquistV.xls",
+                        #"nguddeti@ceg-engineers.com": f"H://CEG Timesheets//{year}//GuddetiN.xls",
+                        #"siqbal@ceg-engineers.com": f"H://CEG Timesheets//{year}//IqbalS.xls",
+                        #"ajama@ceg-engineers.com": f"H://CEG Timesheets//{year}//JamaA.xls",
+                        #"skatz@ceg-engineers.com": f"H://CEG Timesheets//{year}//KatzS.xls",
+                        #"pmalamen@ceg-engineers.com": f"H://CEG Timesheets//{year}//MalamenP.xls",
+                        #"jmitchell@ceg-engineers.com": f"H://CEG Timesheets//{year}//MitchellJ.xls",
+                        #"ntmoe@ceg.mn": f"H://CEG Timesheets//{year}//MoeN.xls",
+                        #"jromero@ceg.mn": f"H://CEG Timesheets//{year}//RomeroJ.xls",
+                        #"dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
+                        #"turban@ceg-engineers.com": f"H://CEG Timesheets//{year}//UrbanT.xls",
+                        #"yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls",
+                        #"mtuma@ceg-engineers.com": f"H://CEG Timesheets//{year}//TumaM.xls"
                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
@@ -260,8 +260,8 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         #wipe codes
         sht.range('AL17:AL69').value = None
 
-        #row_count starts at 17 since that's where the descriptions start  
-        row_count = 17 
+        #row_count starts at 18 since there's an issue with CEGEDU on line 17  
+        row_count = 18 
         #holiday and PTO have special rows
         holiday_row = 14
         pto_row = 15
@@ -298,21 +298,21 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                     if code_desc == ('CEG', 'Holiday'):
                         sht.range(f"{letters_to_numbers_dict[date_index]}{holiday_row}").value = hours    
                         #decrement row count so we overwrite this row on next iteration
-                        if row_count >= 17:
+                        if row_count >= 18:
                             #if we're at 17 or higher, we want to bump it down 1 
                             row_count -= 1 
                         else:
                             #if row count is less than 17, we want to put it at 16, so that the row_count += 1 later will bring us back to 17 
-                            row_count = 16
+                            row_count = 17
                     elif code_desc == ('CEG', 'PTO'):
                         sht.range(f"{letters_to_numbers_dict[date_index]}{pto_row}").value = hours
                         #decrement row count so we overwrite this row on next iteration
-                        if row_count >= 17:
+                        if row_count >= 18:
                             #if we're at 17 or higher, we want to bump it down 1 
                             row_count -= 1 
                         else:
                             #if row count is less than 17, we want to put it at 16, so that the row_count += 1 later will bring us back to 17 
-                            row_count = 16                   
+                            row_count = 17                   
                     else: 
                         sht.range(f"{letters_to_numbers_dict[date_index]}{row_count}").value = hours 
                     #now we match this with our mapping from above to find out which column to put it in in excel
