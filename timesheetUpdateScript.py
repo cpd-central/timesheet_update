@@ -92,31 +92,31 @@ data = pd.DataFrame(list(coll.find()))
 users = data['user']
 
 email_timesheet_dict = {
-                        #"speichel@ceg-engineers.com": "E://programming//timesheet_test_folder//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": "E://programming//timesheet_test_folder//MarsnikJ.xls",
-                        #"rduncan@ceg-engineers.com": "E://programming//timesheet_test_folder//DuncanR.xls",
-                        #"cdolan@ceg.mn": "E://programming//timesheet_test_folder//DolanC.xls",
-                        #"kburk@ceg-engineers.com": "E://programming//timesheet_test_folder//BurkK.xls",
-                        #"mkaas@ceg-engineers.com": "E://programming//timesheet_test_folder//KaasM.xls",
-                        #"bahlsten@ceg-engineers.com": "E://programming//timesheet_test_folder//AhlstenB.xls",
-                        #"mbartholomay@ceg-engineers.com": "E://programming//timesheet_test_folder//BartholomayM.xls",
-                        #"dborkovic@ceg-engineers.com": "E://programming//timesheet_test_folder//BorkovicD.xls",
-                        #"ebryden@ceg-engineers.com": "E://programming//timesheet_test_folder//BrydenE.xls",
-                        #"rbuckingham@ceg-engineers.com": "E://programming//timesheet_test_folder//BuckinghamR.xls",
-                        #"jcasanova@ceg-engineers.com": "E://programming//timesheet_test_folder//CasanovaJ.xls",
-                        #"schowdhary@ceg-engineers.com": "E://programming//timesheet_test_folder//ChowdharyS.xls",
-                        #"vince@ceg.mn": "E://programming//timesheet_test_folder//GranquistV.xls",
-                        #"nguddeti@ceg-engineers.com": "E://programming//timesheet_test_folder//GuddetiN.xls",
-                        #"siqbal@ceg-engineers.com": "E://programming//timesheet_test_folder//IqbalS.xls",
-                        #"ajama@ceg-engineers.com": "E://programming//timesheet_test_folder//JamaA.xls",
-                        #"skatz@ceg-engineers.com": "E://programming//timesheet_test_folder//KatzS.xls",
-                        #"pmalamen@ceg-engineers.com": "E://programming//timesheet_test_folder//MalamenP.xls",
-                        #"jmitchell@ceg-engineers.com": "E://programming//timesheet_test_folder//MitchellJ.xls",
-                        #"ntmoe@ceg.mn": "E://programming//timesheet_test_folder//MoeN.xls",
-                        #"jromero@ceg.mn": "E://programming//timesheet_test_folder//RomeroJ.xls",
-                        #"dsindelar@ceg-engineers.com": "E://programming//timesheet_test_folder//SindelarD.xls",
-                        #"turban@ceg-engineers.com": "E://programming//timesheet_test_folder//UrbanT.xls",
-                        #"yzhang@ceg-engineers.com": "E://programming//timesheet_test_folder//ZhangY.xls"
+                        "speichel@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MarsnikJ.xls",
+                        "rduncan@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//DuncanR.xls",
+                        "cdolan@ceg.mn": f"E://programming//timesheet_test_folder//{year}//DolanC.xls",
+                        "kburk@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BurkK.xls",
+                        "mkaas@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KaasM.xls",
+                        "bahlsten@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//AhlstenB.xls",
+                        "mbartholomay@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BartholomayM.xls",
+                        "dborkovic@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BorkovicD.xls",
+                        "ebryden@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BrydenE.xls",
+                        "rbuckingham@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BuckinghamR.xls",
+                        "jcasanova@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//CasanovaJ.xls",
+                        "schowdhary@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ChowdharyS.xls",
+                        "vince@ceg.mn": f"E://programming//timesheet_test_folder//{year}//GranquistV.xls",
+                        "nguddeti@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//GuddetiN.xls",
+                        "siqbal@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//IqbalS.xls",
+                        "ajama@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//JamaA.xls",
+                        "skatz@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KatzS.xls",
+                        "pmalamen@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MalamenP.xls",
+                        "jmitchell@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MitchellJ.xls",
+                        "ntmoe@ceg.mn": f"E://programming//timesheet_test_folder//{year}//MoeN.xls",
+                        "jromero@ceg.mn": f"E://programming//timesheet_test_folder//{year}//RomeroJ.xls",
+                        "dsindelar@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//SindelarD.xls",
+                        "turban@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//UrbanT.xls",
+                        "yzhang@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ZhangY.xls"
                        }
 
 
@@ -167,6 +167,8 @@ nonbillable_codes = ['CEG', 'CEGTRNG', 'CEGEDU', 'CEGMKTG']
 
 if last_pay_period_end.month != now.month:
     sheets.append(sheets_dict[last_pay_period_end.month])
+
+
 
 def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
     #we also need to map the range of Excel letters to numbers
