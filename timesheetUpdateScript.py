@@ -177,6 +177,14 @@ if last_pay_period_end.year != year:
 else:
     is_year_crossover = False
 
+def get_workbook_and_sheet(sheet_year, user_name, sheet):
+    path = f"E://programming//timesheet_test_folder//{sheet_year}"
+    full_path = os.path.join(path, user_name)
+    wb = xw.Book(full_path)
+    app = xw.apps.active
+    sht = wb.sheets[sheet]
+    return (wb, app, sht)
+
 def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pay_period_sent, is_year_crossover):
     #we also need to map the range of Excel letters to numbers
     letters_to_numbers_dict = {
@@ -204,14 +212,11 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
         #if it's not a year crossover, set sheet_year to the current year 
         else:
             sheet_year = year
-        
 
-        path = f"E://programming//timesheet_test_folder//{sheet_year}" 
-        full_path = os.path.join(path, user_spreadsheet_name)
-        print(full_path) 
-        wb = xw.Book(full_path)
-        app = xw.apps.active   
-        sht = wb.sheets[sheet]
+        xw_variables = get_workbook_and_sheet(sheet_year, user_spreadsheet_name, sheet) 
+        wb = xw_variables[0]
+        app = xw_variables[1]   
+        sht = xw_variables[2] 
         
         if sht.range('AF69').value == 'Complete':
             print(f"{sheet} is protected and cannot be written to.")
@@ -414,23 +419,30 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
         time.sleep(2) 
     return pay_period_total 
 
-def run_macro_and_set_flag(wb, user):
+def run_macro_and_set_flag(user):
+    xw_variables = get_workbook_and_sheet(year, user_spreadsheet_name, sheets[0]) 
+    wb = xw_variables[0] 
+    app = xw_variables[1]
+    sht = xw_variables[2] 
     macro = wb.macro('Sendpayperiodsummary') 
     macro() 
     print('pay period has been sent')
     coll.update_one({'user': user}, {'$set': {'pay_period_sent': True}})
+    wb.save()
+    app.quit() 
+    time.sleep(2) 
     return None
 
-def check_and_send(wb, pay_period_total, user):
+def check_and_send(pay_period_total, user):
     print('pay period has not been sent')
     print(pay_period_total) 
     if user not in part_time_users: 
         if pay_period_total >= 80: 
-            run_macro_and_set_flag(wb, user)
+            run_macro_and_set_flag(user)
         else:
             print('timesheet needs finishing') 
     else:
-        run_macro_and_set_flag(wb, user)
+        run_macro_and_set_flag(user)
     
     return None 
 
@@ -452,7 +464,7 @@ for j, user in enumerate(users):
         print('pay period sent') 
         pass
     else:
-        check_and_send(wb, pay_period_total, user)
+        check_and_send(pay_period_total, user)
     print(f"{user} complete")
 
 try:
