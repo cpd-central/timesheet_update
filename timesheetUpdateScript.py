@@ -5,6 +5,8 @@ import datetime
 import importlib
 from dateutil.relativedelta import relativedelta
 import calendar
+import os
+import time
 
 #client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
 client = MongoClient('mongodb://localhost:9999')
@@ -15,6 +17,8 @@ coll = db['timesheets']
 coll_users = db['users']
 
 now = datetime.datetime.today()
+now = datetime.datetime(2020, 1, 3)
+
 
 year = now.year
 month = now.month
@@ -92,31 +96,31 @@ data = pd.DataFrame(list(coll.find()))
 users = data['user']
 
 email_timesheet_dict = {
-                        "speichel@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MarsnikJ.xls",
-                        "rduncan@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//DuncanR.xls",
-                        "cdolan@ceg.mn": f"E://programming//timesheet_test_folder//{year}//DolanC.xls",
-                        "kburk@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BurkK.xls",
-                        "mkaas@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KaasM.xls",
-                        "bahlsten@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//AhlstenB.xls",
-                        "mbartholomay@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BartholomayM.xls",
-                        "dborkovic@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BorkovicD.xls",
-                        "ebryden@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BrydenE.xls",
-                        "rbuckingham@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BuckinghamR.xls",
-                        "jcasanova@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//CasanovaJ.xls",
-                        "schowdhary@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ChowdharyS.xls",
-                        "vince@ceg.mn": f"E://programming//timesheet_test_folder//{year}//GranquistV.xls",
-                        "nguddeti@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//GuddetiN.xls",
-                        "siqbal@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//IqbalS.xls",
-                        "ajama@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//JamaA.xls",
-                        "skatz@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KatzS.xls",
-                        "pmalamen@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MalamenP.xls",
-                        "jmitchell@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MitchellJ.xls",
-                        "ntmoe@ceg.mn": f"E://programming//timesheet_test_folder//{year}//MoeN.xls",
-                        "jromero@ceg.mn": f"E://programming//timesheet_test_folder//{year}//RomeroJ.xls",
-                        "dsindelar@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//SindelarD.xls",
-                        "turban@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//UrbanT.xls",
-                        "yzhang@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ZhangY.xls"
+                        #"speichel@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        #"rduncan@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//DuncanR.xls",
+                        #"cdolan@ceg.mn": f"E://programming//timesheet_test_folder//{year}//DolanC.xls",
+                        #"kburk@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BurkK.xls",
+                        #"mkaas@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KaasM.xls",
+                        #"bahlsten@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//AhlstenB.xls",
+                        #"mbartholomay@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BartholomayM.xls",
+                        #"dborkovic@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BorkovicD.xls",
+                        #"ebryden@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BrydenE.xls",
+                        #"rbuckingham@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BuckinghamR.xls",
+                        #"jcasanova@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//CasanovaJ.xls",
+                        #"schowdhary@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ChowdharyS.xls",
+                        #"vince@ceg.mn": f"E://programming//timesheet_test_folder//{year}//GranquistV.xls",
+                        #"nguddeti@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//GuddetiN.xls",
+                        #"siqbal@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//IqbalS.xls",
+                        #"ajama@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//JamaA.xls",
+                        #"skatz@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KatzS.xls",
+                        #"pmalamen@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MalamenP.xls",
+                        #"jmitchell@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MitchellJ.xls",
+                        #"ntmoe@ceg.mn": f"E://programming//timesheet_test_folder//{year}//MoeN.xls",
+                        #"jromero@ceg.mn": f"E://programming//timesheet_test_folder//{year}//RomeroJ.xls",
+                        #"dsindelar@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//SindelarD.xls",
+                        #"turban@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//UrbanT.xls",
+                        #"yzhang@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ZhangY.xls"
                        }
 
 
@@ -165,12 +169,15 @@ last_pay_period_end = most_recent_pay_period_end - datetime.timedelta(days=14)
 #nonbillable codes
 nonbillable_codes = ['CEG', 'CEGTRNG', 'CEGEDU', 'CEGMKTG']
 
-if last_pay_period_end.month != now.month:
+if last_pay_period_end.month != month:
     sheets.append(sheets_dict[last_pay_period_end.month])
 
+if last_pay_period_end.year != year:
+    is_year_crossover = True
+else:
+    is_year_crossover = False
 
-
-def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
+def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pay_period_sent, is_year_crossover):
     #we also need to map the range of Excel letters to numbers
     letters_to_numbers_dict = {
         0: 'B', 1: 'C', 2: 'D', 3: 'E', 4: 'F',
@@ -180,11 +187,31 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         20: 'V', 21: 'W', 22: 'X', 23: 'Y', 24: 'Z',
         25: 'AA', 26: 'AB', 27: 'AC', 28: 'AD', 29: 'AE', 30: 'AF'
     }
+
     pay_period_total = 0 
 
     for sheet in sheets:
         print(sheet) 
+        print(is_year_crossover) 
+        #if it is a year crossover, check if it's January or December 
+        if is_year_crossover:
+            #if it's January, set the sheet year to the current year 
+            if sheet == '1-January':
+                sheet_year = year
+            #if it's December, set the sheet year to the previous year 
+            if sheet == '12-December':
+                sheet_year = last_pay_period_end.year 
+        #if it's not a year crossover, set sheet_year to the current year 
+        else:
+            sheet_year = year
+        
+
+        path = f"E://programming//timesheet_test_folder//{sheet_year}" 
+        full_path = os.path.join(path, user_spreadsheet_name)
+        wb = xw.Book(full_path)
+        app = xw.apps.active   
         sht = wb.sheets[sheet]
+
         if sht.range('AF69').value == 'Complete':
             print(f"{sheet} is protected and cannot be written to.")
             continue 
@@ -375,7 +402,10 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                 start_end = (date_range_strings.index(pay_period_date_range[0]), date_range_strings.index(pay_period_date_range[-1])) 
                 pay_period_total = update_pay_period_total(pay_period_total, start_end)
                 print(pay_period_total)
-    
+        wb.save() 
+        #give the app some time to fully close 
+        time.sleep(2) 
+        app.quit() 
     return pay_period_total 
 
 def run_macro_and_set_flag(wb, user):
@@ -405,13 +435,13 @@ for j, user in enumerate(users):
     print(user)
     #get whether or not the pay period has been sent for this user
     pay_period_sent = data['pay_period_sent'][data['user'] == user].values[0]
-    wb = xw.Book(email_timesheet_dict[user])
-    app = xw.apps.active
-
+    
+    user_spreadsheet_name = email_timesheet_dict[user]
+ 
     #we write to the spreadsheet and get the total regardless of the day
     user_data = data[data['user'] == user]
-    pay_period_total = write_to_spreadsheet(wb, sheets, is_last_day_of_month, user_data, pay_period_sent)
-
+    pay_period_total = write_to_spreadsheet(user_spreadsheet_name, sheets, is_last_day_of_month, user_data, pay_period_sent, is_year_crossover)
+    exit()
     if pay_period_sent:
         print('pay period sent') 
         pass
