@@ -17,7 +17,7 @@ coll = db['timesheets']
 coll_users = db['users']
 
 now = datetime.datetime.today()
-now = datetime.datetime(2020, 1, 3)
+now = datetime.datetime(2020, 1, 12)
 
 
 year = now.year
@@ -208,10 +208,11 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
 
         path = f"E://programming//timesheet_test_folder//{sheet_year}" 
         full_path = os.path.join(path, user_spreadsheet_name)
+        print(full_path) 
         wb = xw.Book(full_path)
         app = xw.apps.active   
         sht = wb.sheets[sheet]
-
+        
         if sht.range('AF69').value == 'Complete':
             print(f"{sheet} is protected and cannot be written to.")
             continue 
@@ -240,7 +241,6 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
 
         #remove none values for months with 30 or fewer days
         date_range = [d for d in date_range if d is not None]
-
         #format our date range into a string that matches what we have in our database 
         date_range_strings = [] 
         for date in date_range:
@@ -294,7 +294,7 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
         #holiday and PTO have special rows
         holiday_row = 14
         pto_row = 15
-        
+
         for code_desc in code_desc_hours_dict:
             code = code_desc[0]
             description = code_desc[1] 
@@ -378,14 +378,20 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
                     print(pay_period_total) 
                 else:
                     print('previous month') 
-                    previous_month = month - 1 
-                    last_day_of_month = calendar.monthrange(year, previous_month)[1]
+                    #if January, we set previous month to 12 (December) 
+                    if month == 1:
+                        previous_month = 12 
+                    else: 
+                        previous_month = month - 1 
+                    last_day_of_month = calendar.monthrange(last_pay_period_end.year, previous_month)[1]
                     for i in range(last_pay_period_end.day + 1, last_day_of_month + 1): 
-                        date = datetime.datetime(year, previous_month, i) 
+                        date = datetime.datetime(last_pay_period_end.year, previous_month, i) 
                         date_string = date.strftime("%e-%b-%y").strip(' ') 
                         month_date_range.append(date_string) 
                     #if we're in the current month, the start index is 1 (first of month) 
                     # and the end index is the index of the last day in the month date range 
+                    print(month_date_range) 
+                    print(date_range_strings) 
                     start_end = (date_range_strings.index(month_date_range[0]), last_day_of_month - 1) 
                     pay_period_total = update_pay_period_total(pay_period_total, start_end)
                     print(pay_period_total) 
@@ -404,8 +410,8 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
                 print(pay_period_total)
         wb.save() 
         #give the app some time to fully close 
-        time.sleep(2) 
         app.quit() 
+        time.sleep(2) 
     return pay_period_total 
 
 def run_macro_and_set_flag(wb, user):
@@ -441,14 +447,12 @@ for j, user in enumerate(users):
     #we write to the spreadsheet and get the total regardless of the day
     user_data = data[data['user'] == user]
     pay_period_total = write_to_spreadsheet(user_spreadsheet_name, sheets, is_last_day_of_month, user_data, pay_period_sent, is_year_crossover)
-    exit()
+    print(pay_period_total)
     if pay_period_sent:
         print('pay period sent') 
         pass
     else:
         check_and_send(wb, pay_period_total, user)
-    
-    wb.save()       #Saves the Spreadsheets.
     print(f"{user} complete")
 
 try:
