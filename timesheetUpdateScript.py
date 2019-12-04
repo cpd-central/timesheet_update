@@ -361,6 +361,7 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             def update_pay_period_total(pay_period_total, start_end):
                 current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value 
                 print(current_month_hours) 
+                #if there's only one day in the month in the pay period, we don't need to sum the hours, just set the total as the single day's hours
                 if isinstance(current_month_hours, float):
                     current_month_total = current_month_hours
                 else:
