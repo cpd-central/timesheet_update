@@ -161,7 +161,6 @@ sheets.append(sheets_dict[now.month])  #get current month sheet
 most_recent_pay_period_end = get_closest_pay_period(now)
 last_pay_period_end = most_recent_pay_period_end - datetime.timedelta(days=14)
 
-
 #nonbillable codes
 nonbillable_codes = ['CEG', 'CEGTRNG', 'CEGEDU', 'CEGMKTG']
 
@@ -325,10 +324,12 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         if not pay_period_sent:
             total_hours_row = 70  
             
-            def update_pay_period_total(pay_period_total, start_end):
-                current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value 
-                print(current_month_hours) 
-                current_month_total = sum(current_month_hours)
+            def update_pay_period_total(pay_period_total, start_end):                
+                current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value
+                if isinstance(current_month_hours, float):
+                    current_month_total = current_month_hours
+                else:
+                    current_month_total = sum(current_month_hours)
                 pay_period_total = pay_period_total + current_month_total
                 return pay_period_total 
             
@@ -344,7 +345,7 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                         month_date_range.append(date_string)
                     #now, get the indeces of where these dates live in the date range string 
                     #if we're in the current month, the start index is 1 (first of month) 
-                    # and the end index is the index of the last day in the month date range 
+                    # and the end index is the index of the last day in the month date range   
                     start_end = (0, date_range_strings.index(month_date_range[-1]))  
                     pay_period_total = update_pay_period_total(pay_period_total, start_end) 
                     print(pay_period_total) 
