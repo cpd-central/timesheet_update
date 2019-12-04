@@ -17,7 +17,7 @@ coll = db['timesheets']
 coll_users = db['users']
 
 now = datetime.datetime.today()
-now = datetime.datetime(2020, 1, 12)
+#now = datetime.datetime(2020, 1, 12)
 
 
 year = now.year
@@ -361,7 +361,10 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             def update_pay_period_total(pay_period_total, start_end):
                 current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value 
                 print(current_month_hours) 
-                current_month_total = sum(current_month_hours)
+                if isinstance(current_month_hours, float):
+                    current_month_total = current_month_hours
+                else:
+                    current_month_total = sum(current_month_hours)
                 pay_period_total = pay_period_total + current_month_total
                 return pay_period_total 
             
