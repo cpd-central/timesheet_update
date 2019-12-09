@@ -5,9 +5,11 @@ import datetime
 import importlib
 from dateutil.relativedelta import relativedelta
 import calendar
+import os
+import time
 
 client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
-#client = MongoClient('mongodb://192.168.99.100:9999')
+#client = MongoClient('mongodb://localhost:9999')
 
 db = client['heroku_0qcgxhh9']
 
@@ -91,62 +93,62 @@ data = pd.DataFrame(list(coll.find()))
 #get the users column from the dataframe
 users = data['user']
 
-#email_timesheet_dict = {
-                        #"speichel@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//PeichelS.xls",
-                        #"jmarsnik@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//MarsnikJ.xls",
-                        #"rduncan@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//DuncanR.xls",
-                        #"cdolan@ceg.mn": "C://Users/jmarsnik//Desktop//timesheet_test_folder//DolanC.xls",
-                        #"kburk@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//BurkK.xls",
-                        #"mkaas@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//KaasM.xls",
-                        #"bahlsten@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//AhlstenB.xls",
-                        #"mbartholomay@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//BartholomayM.xls",
-                        #"dborkovic@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//BorkovicD.xls",
-                        #"ebryden@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//BrydenE.xls",
-                        #"rbuckingham@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//BuckinghamR.xls",
-                        #"jcasanova@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//CasanovaJ.xls",
-                        #"schowdhary@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//ChowdharyS.xls",
-                        #"vince@ceg.mn": "C://Users/jmarsnik//Desktop//timesheet_test_folder//GranquistV.xls",
-                        #"nguddeti@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//GuddetiN.xls",
-                        #"siqbal@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//IqbalS.xls",
-                        #"ajama@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//JamaA.xls",
-                        #"skatz@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//KatzS.xls",
-                        #"pmalamen@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//MalamenP.xls",
-                        #"jmitchell@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//MitchellJ.xls",
-                        #"ntmoe@ceg.mn": "C://Users/jmarsnik//Desktop//timesheet_test_folder//MoeN.xls",
-                        #"jromero@ceg.mn": "C://Users/jmarsnik//Desktop//timesheet_test_folder//RomeroJ.xls",
-                        #"dsindelar@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//SindelarD.xls",
-                        #"turban@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//UrbanT.xls",
-                        #"yzhang@ceg-engineers.com": "C://Users/jmarsnik//Desktop//timesheet_test_folder//ZhangY.xls"
-                       #}
+email_timesheet_dict = {
+                        #"speichel@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//PeichelS.xls",
+                        #"jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        #"rduncan@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//DuncanR.xls",
+                        #"cdolan@ceg.mn": f"E://programming//timesheet_test_folder//{year}//DolanC.xls",
+                        #"kburk@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BurkK.xls",
+                        #"mkaas@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KaasM.xls",
+                        #"bahlsten@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//AhlstenB.xls",
+                        #"mbartholomay@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BartholomayM.xls",
+                        #"dborkovic@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BorkovicD.xls",
+                        #"ebryden@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BrydenE.xls",
+                        #"rbuckingham@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//BuckinghamR.xls",
+                        #"jcasanova@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//CasanovaJ.xls",
+                        #"schowdhary@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ChowdharyS.xls",
+                        #"vince@ceg.mn": f"E://programming//timesheet_test_folder//{year}//GranquistV.xls",
+                        #"nguddeti@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//GuddetiN.xls",
+                        #"siqbal@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//IqbalS.xls",
+                        #"ajama@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//JamaA.xls",
+                        #"skatz@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//KatzS.xls",
+                        #"pmalamen@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MalamenP.xls",
+                        #"jmitchell@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//MitchellJ.xls",
+                        #"ntmoe@ceg.mn": f"E://programming//timesheet_test_folder//{year}//MoeN.xls",
+                        #"jromero@ceg.mn": f"E://programming//timesheet_test_folder//{year}//RomeroJ.xls",
+                        #"dsindelar@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//SindelarD.xls",
+                        #"turban@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//UrbanT.xls",
+                        #"yzhang@ceg-engineers.com": f"E://programming//timesheet_test_folder//{year}//ZhangY.xls"
+                       }
 
 
 email_timesheet_dict = {
-                        "speichel@ceg-engineers.com": f"H://CEG Timesheets//{year}//PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": f"H://CEG Timesheets//{year}//MarsnikJ.xls",
-                        "rduncan@ceg-engineers.com": f"H://CEG Timesheets//{year}//DuncanR.xls",
-                        "cdolan@ceg.mn": f"H://CEG Timesheets//{year}//DolanC.xls",
-                        "kburk@ceg-engineers.com": f"H://CEG Timesheets//{year}//BurkK.xls",
-                        "mkaas@ceg-engineers.com": f"H://CEG Timesheets//{year}//KaasM.xls",
-                        "bahlsten@ceg-engineers.com": f"H://CEG Timesheets//{year}//AhlstenB.xls",
-                        "mbartholomay@ceg-engineers.com": f"H://CEG Timesheets//{year}//BartholomayM.xls",
-                        "dborkovic@ceg-engineers.com": f"H://CEG Timesheets//{year}//BorkovicD.xls",
-                        "ebryden@ceg-engineers.com": f"H://CEG Timesheets//{year}//BrydenE.xls",
-                        "rbuckingham@ceg-engineers.com": f"H://CEG Timesheets//{year}//BuckinghamR.xls",
-                        "jcasanova@ceg-engineers.com": f"H://CEG Timesheets//{year}//CasanovaJ.xls",
-                        "schowdhary@ceg-engineers.com": f"H://CEG Timesheets//{year}//ChowdharyS.xls",
-                        "vince@ceg.mn": f"H://CEG Timesheets//{year}//GranquistV.xls",
-                        "nguddeti@ceg-engineers.com": f"H://CEG Timesheets//{year}//GuddetiN.xls",
-                        "siqbal@ceg-engineers.com": f"H://CEG Timesheets//{year}//IqbalS.xls",
-                        "ajama@ceg-engineers.com": f"H://CEG Timesheets//{year}//JamaA.xls",
-                        "skatz@ceg-engineers.com": f"H://CEG Timesheets//{year}//KatzS.xls",
-                        "pmalamen@ceg-engineers.com": f"H://CEG Timesheets//{year}//MalamenP.xls",
-                        "jmitchell@ceg-engineers.com": f"H://CEG Timesheets//{year}//MitchellJ.xls",
-                        "ntmoe@ceg.mn": f"H://CEG Timesheets//{year}//MoeN.xls",
-                        "jromero@ceg.mn": f"H://CEG Timesheets//{year}//RomeroJ.xls",
-                        "dsindelar@ceg-engineers.com": f"H://CEG Timesheets//{year}//SindelarD.xls",
-                        "turban@ceg-engineers.com": f"H://CEG Timesheets//{year}//UrbanT.xls",
-                        "yzhang@ceg-engineers.com": f"H://CEG Timesheets//{year}//ZhangY.xls",
-                        "mtuma@ceg-engineers.com": f"H://CEG Timesheets//{year}//TumaM.xls"
+                        "speichel@ceg-engineers.com": "PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        "rduncan@ceg-engineers.com": "DuncanR.xls",
+                        "cdolan@ceg.mn": "DolanC.xls",
+                        "kburk@ceg-engineers.com": "BurkK.xls",
+                        "mkaas@ceg-engineers.com": "KaasM.xls",
+                        "bahlsten@ceg-engineers.com": "AhlstenB.xls",
+                        "mbartholomay@ceg-engineers.com": "BartholomayM.xls",
+                        "dborkovic@ceg-engineers.com": "BorkovicD.xls",
+                        "ebryden@ceg-engineers.com": "BrydenE.xls",
+                        "rbuckingham@ceg-engineers.com": "BuckinghamR.xls",
+                        "jcasanova@ceg-engineers.com": "CasanovaJ.xls",
+                        "schowdhary@ceg-engineers.com": "ChowdharyS.xls",
+                        "vince@ceg.mn": "GranquistV.xls",
+                        "nguddeti@ceg-engineers.com": "GuddetiN.xls",
+                        "siqbal@ceg-engineers.com": "IqbalS.xls",
+                        "ajama@ceg-engineers.com": "JamaA.xls",
+                        "skatz@ceg-engineers.com": "KatzS.xls",
+                        "pmalamen@ceg-engineers.com": "MalamenP.xls",
+                        "jmitchell@ceg-engineers.com": "MitchellJ.xls",
+                        "ntmoe@ceg.mn": "MoeN.xls",
+                        "jromero@ceg.mn": "RomeroJ.xls",
+                        "dsindelar@ceg-engineers.com": "SindelarD.xls",
+                        "turban@ceg-engineers.com": "UrbanT.xls",
+                        "yzhang@ceg-engineers.com": "ZhangY.xls",
+                        "mtuma@ceg-engineers.com": "TumaM.xls"
                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
@@ -164,10 +166,23 @@ last_pay_period_end = most_recent_pay_period_end - datetime.timedelta(days=14)
 #nonbillable codes
 nonbillable_codes = ['CEG', 'CEGTRNG', 'CEGEDU', 'CEGMKTG']
 
-if last_pay_period_end.month != now.month:
+if last_pay_period_end.month != month:
     sheets.append(sheets_dict[last_pay_period_end.month])
 
-def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
+if last_pay_period_end.year != year:
+    is_year_crossover = True
+else:
+    is_year_crossover = False
+
+def get_workbook_and_sheet(sheet_year, user_name, sheet):
+    path = f"H://CEG Timesheets//{sheet_year}//"
+    full_path = os.path.join(path, user_name)
+    wb = xw.Book(full_path)
+    app = xw.apps.active
+    sht = wb.sheets[sheet]
+    return (wb, app, sht)
+
+def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pay_period_sent, is_year_crossover):
     #we also need to map the range of Excel letters to numbers
     letters_to_numbers_dict = {
         0: 'B', 1: 'C', 2: 'D', 3: 'E', 4: 'F',
@@ -177,11 +192,29 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         20: 'V', 21: 'W', 22: 'X', 23: 'Y', 24: 'Z',
         25: 'AA', 26: 'AB', 27: 'AC', 28: 'AD', 29: 'AE', 30: 'AF'
     }
+
     pay_period_total = 0 
 
     for sheet in sheets:
         print(sheet) 
-        sht = wb.sheets[sheet]
+        print(is_year_crossover) 
+        #if it is a year crossover, check if it's January or December 
+        if is_year_crossover:
+            #if it's January, set the sheet year to the current year 
+            if sheet == '1-January':
+                sheet_year = year
+            #if it's December, set the sheet year to the previous year 
+            if sheet == '12-December':
+                sheet_year = last_pay_period_end.year 
+        #if it's not a year crossover, set sheet_year to the current year 
+        else:
+            sheet_year = year
+
+        xw_variables = get_workbook_and_sheet(sheet_year, user_spreadsheet_name, sheet) 
+        wb = xw_variables[0]
+        app = xw_variables[1]   
+        sht = xw_variables[2] 
+        
         if sht.range('AF69').value == 'Complete':
             print(f"{sheet} is protected and cannot be written to.")
             continue 
@@ -210,7 +243,6 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
 
         #remove none values for months with 30 or fewer days
         date_range = [d for d in date_range if d is not None]
-
         #format our date range into a string that matches what we have in our database 
         date_range_strings = [] 
         for date in date_range:
@@ -239,10 +271,10 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                 else:
                     #so, the tuple is in the dictionary
                     if isinstance(code_desc_hours_dict[code_desc], list):
-                        code_desc_hours_dict[code_desc] = {}
-                for j, hour in enumerate(hours):
-                    if hour != None:
-                        date = date_range_strings[j]
+                        code_desc_hours_dict[code_desc] = {} 
+                        for j, hour in enumerate(hours): 
+                            if hour != None:
+                                date = date_range_strings[j]
                         #old_code_desc_hours_dict[code_desc] = {date: hour}
                         #go through the newest data to check if these hours already exist in the database
                         if date not in code_desc_hours_dict[code_desc]:
@@ -260,15 +292,15 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         sht.range('AL17:AL69').value = None
 
         #row_count starts at 18 since there's an issue with CEGEDU on line 17  
+
         row_count = 18 
         #holiday and PTO have special rows
         holiday_row = 14
         pto_row = 15
-        
+
         for code_desc in code_desc_hours_dict:
             code = code_desc[0]
             description = code_desc[1] 
-
             # write the code/description in, followed by the time
             sht.range(f"{description_column}{row_count}").value = description 
             sht.range(f"{code_column}{row_count}").value = code              
@@ -324,9 +356,12 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
         if not pay_period_sent:
             total_hours_row = 70  
             
-            def update_pay_period_total(pay_period_total, start_end):                
-                current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value
-                #if there's only one day in the month in the pay period, we don't need to sum the hours, just set the total as the single day's hours 
+
+            def update_pay_period_total(pay_period_total, start_end):
+                current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value 
+                print(current_month_hours) 
+                #if there's only one day in the month in the pay period, we don't need to sum the hours, just set the total as the single day's hours
+
                 if isinstance(current_month_hours, float):
                     current_month_total = current_month_hours
                 else:
@@ -352,14 +387,20 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                     print(pay_period_total) 
                 else:
                     print('previous month') 
-                    previous_month = month - 1 
-                    last_day_of_month = calendar.monthrange(year, previous_month)[1]
+                    #if January, we set previous month to 12 (December) 
+                    if month == 1:
+                        previous_month = 12 
+                    else: 
+                        previous_month = month - 1 
+                    last_day_of_month = calendar.monthrange(last_pay_period_end.year, previous_month)[1]
                     for i in range(last_pay_period_end.day + 1, last_day_of_month + 1): 
-                        date = datetime.datetime(year, previous_month, i) 
+                        date = datetime.datetime(last_pay_period_end.year, previous_month, i) 
                         date_string = date.strftime("%e-%b-%y").strip(' ') 
                         month_date_range.append(date_string) 
                     #if we're in the current month, the start index is 1 (first of month) 
                     # and the end index is the index of the last day in the month date range 
+                    print(month_date_range) 
+                    print(date_range_strings) 
                     start_end = (date_range_strings.index(month_date_range[0]), last_day_of_month - 1) 
                     pay_period_total = update_pay_period_total(pay_period_total, start_end)
                     print(pay_period_total) 
@@ -376,26 +417,36 @@ def write_to_spreadsheet(wb, sheets, month_end, user_data, pay_period_sent):
                 start_end = (date_range_strings.index(pay_period_date_range[0]), date_range_strings.index(pay_period_date_range[-1])) 
                 pay_period_total = update_pay_period_total(pay_period_total, start_end)
                 print(pay_period_total)
-    
+        wb.save() 
+        #give the app some time to fully close 
+        app.quit() 
+        time.sleep(2) 
     return pay_period_total 
 
-def run_macro_and_set_flag(wb, user):
+def run_macro_and_set_flag(user):
+    xw_variables = get_workbook_and_sheet(year, user_spreadsheet_name, sheets[0]) 
+    wb = xw_variables[0] 
+    app = xw_variables[1]
+    sht = xw_variables[2] 
     macro = wb.macro('Sendpayperiodsummary') 
     macro() 
     print('pay period has been sent')
     coll.update_one({'user': user}, {'$set': {'pay_period_sent': True}})
+    wb.save()
+    app.quit() 
+    time.sleep(2) 
     return None
 
-def check_and_send(wb, pay_period_total, user):
+def check_and_send(pay_period_total, user):
     print('pay period has not been sent')
     print(pay_period_total) 
     if user not in part_time_users: 
         if pay_period_total >= 80: 
-            run_macro_and_set_flag(wb, user)
+            run_macro_and_set_flag(user)
         else:
             print('timesheet needs finishing') 
     else:
-        run_macro_and_set_flag(wb, user)
+        run_macro_and_set_flag(user)
     
     return None 
 
@@ -406,20 +457,18 @@ for j, user in enumerate(users):
     print(user)
     #get whether or not the pay period has been sent for this user
     pay_period_sent = data['pay_period_sent'][data['user'] == user].values[0]
-    wb = xw.Book(email_timesheet_dict[user])
-    app = xw.apps.active
-
+    
+    user_spreadsheet_name = email_timesheet_dict[user]
+ 
     #we write to the spreadsheet and get the total regardless of the day
     user_data = data[data['user'] == user]
-    pay_period_total = write_to_spreadsheet(wb, sheets, is_last_day_of_month, user_data, pay_period_sent)
-
+    pay_period_total = write_to_spreadsheet(user_spreadsheet_name, sheets, is_last_day_of_month, user_data, pay_period_sent, is_year_crossover)
+    print(pay_period_total)
     if pay_period_sent:
         print('pay period sent') 
         pass
     else:
-        check_and_send(wb, pay_period_total, user)
-    
-    wb.save()       #Saves the Spreadsheets.
+        check_and_send(pay_period_total, user)
     print(f"{user} complete")
 
 try:
