@@ -17,8 +17,6 @@ coll = db['timesheets']
 coll_users = db['users']
 
 now = datetime.datetime.today()
-#now = datetime.datetime(2020, 1, 12)
-
 
 year = now.year
 month = now.month
