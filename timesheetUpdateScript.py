@@ -8,8 +8,8 @@ import calendar
 import os
 import time
 
-#client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
-client = MongoClient('mongodb://localhost:9999')
+client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
+#client = MongoClient('mongodb://localhost:9999')
 
 db = client['heroku_0qcgxhh9']
 
@@ -17,7 +17,7 @@ coll = db['timesheets']
 coll_users = db['users']
 
 now = datetime.datetime.today()
-now = datetime.datetime(2019, 12, 15)
+#now = datetime.datetime(2019, 12, 15)
 
 year = now.year
 month = now.month
@@ -96,7 +96,7 @@ users = data['user']
 
 email_timesheet_dict = {
                         #"speichel@ceg-engineers.com": "PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        #"jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
                         #"rduncan@ceg-engineers.com": "DuncanR.xls",
                         #"cdolan@ceg.mn": "DolanC.xls",
                         #"kburk@ceg-engineers.com": "BurkK.xls",
@@ -123,34 +123,34 @@ email_timesheet_dict = {
                        }
 
 
-#email_timesheet_dict = {
-#                        "speichel@ceg-engineers.com": "PeichelS.xls",
-#                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
-#                        "rduncan@ceg-engineers.com": "DuncanR.xls",
-#                        "cdolan@ceg.mn": "DolanC.xls",
-#                        "kburk@ceg-engineers.com": "BurkK.xls",
-#                        "mkaas@ceg-engineers.com": "KaasM.xls",
-#                        "bahlsten@ceg-engineers.com": "AhlstenB.xls",
-#                        "mbartholomay@ceg-engineers.com": "BartholomayM.xls",
-#                        "dborkovic@ceg-engineers.com": "BorkovicD.xls",
-#                        "ebryden@ceg-engineers.com": "BrydenE.xls",
-#                        "rbuckingham@ceg-engineers.com": "BuckinghamR.xls",
-#                        "jcasanova@ceg-engineers.com": "CasanovaJ.xls",
-#                        "schowdhary@ceg-engineers.com": "ChowdharyS.xls",
-#                        "vince@ceg.mn": "GranquistV.xls",
-#                        "nguddeti@ceg-engineers.com": "GuddetiN.xls",
-#                        "siqbal@ceg-engineers.com": "IqbalS.xls",
-#                        "ajama@ceg-engineers.com": "JamaA.xls",
-#                        "skatz@ceg-engineers.com": "KatzS.xls",
-#                        "pmalamen@ceg-engineers.com": "MalamenP.xls",
-#                        "jmitchell@ceg-engineers.com": "MitchellJ.xls",
-#                        "ntmoe@ceg.mn": "MoeN.xls",
-#                        "jromero@ceg.mn": "RomeroJ.xls",
-#                        "dsindelar@ceg-engineers.com": "SindelarD.xls",
-#                        "turban@ceg-engineers.com": "UrbanT.xls",
-#                        "yzhang@ceg-engineers.com": "ZhangY.xls",
-#                        "mtuma@ceg-engineers.com": "TumaM.xls"
-#                       }
+email_timesheet_dict = {
+                        "speichel@ceg-engineers.com": "PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        "rduncan@ceg-engineers.com": "DuncanR.xls",
+                        "cdolan@ceg.mn": "DolanC.xls",
+                        "kburk@ceg-engineers.com": "BurkK.xls",
+                        "mkaas@ceg-engineers.com": "KaasM.xls",
+                        "bahlsten@ceg-engineers.com": "AhlstenB.xls",
+                        "mbartholomay@ceg-engineers.com": "BartholomayM.xls",
+                        "dborkovic@ceg-engineers.com": "BorkovicD.xls",
+                        "ebryden@ceg-engineers.com": "BrydenE.xls",
+                        "rbuckingham@ceg-engineers.com": "BuckinghamR.xls",
+                        "jcasanova@ceg-engineers.com": "CasanovaJ.xls",
+                        "schowdhary@ceg-engineers.com": "ChowdharyS.xls",
+                        "vince@ceg.mn": "GranquistV.xls",
+                        "nguddeti@ceg-engineers.com": "GuddetiN.xls",
+                        "siqbal@ceg-engineers.com": "IqbalS.xls",
+                        "ajama@ceg-engineers.com": "JamaA.xls",
+                        "skatz@ceg-engineers.com": "KatzS.xls",
+                        "pmalamen@ceg-engineers.com": "MalamenP.xls",
+                        "jmitchell@ceg-engineers.com": "MitchellJ.xls",
+                        "ntmoe@ceg.mn": "MoeN.xls",
+                        "jromero@ceg.mn": "RomeroJ.xls",
+                        "dsindelar@ceg-engineers.com": "SindelarD.xls",
+                        "turban@ceg-engineers.com": "UrbanT.xls",
+                        "yzhang@ceg-engineers.com": "ZhangY.xls",
+                        "mtuma@ceg-engineers.com": "TumaM.xls"
+                       }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
 
@@ -177,7 +177,7 @@ else:
 
 def get_workbook_and_sheet(sheet_year, user_name, sheet):
     #path = f"H://CEG Timesheets//{sheet_year}//"
-    path = f"E://programming//timesheet_test_folder//{sheet_year}//"
+    path = f"H://CEG Timesheets//{sheet_year}//"
     full_path = os.path.join(path, user_name)
     wb = xw.Book(full_path)
     app = xw.apps.active
