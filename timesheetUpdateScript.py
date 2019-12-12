@@ -219,6 +219,8 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
         
         if sht.range('AF69').value == 'Complete':
             print(f"{sheet} is protected and cannot be written to.")
+            wb.save()
+            app.quit() 
             continue 
         else:
             #if the sheet isn't protected, we start writing to it
@@ -423,12 +425,12 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
         #but only if it's the second sheet
         if s > 0:
             macro = wb.macro('Sendpayperiodsummary')
-            macro() 
-    
+            macro()  
+        
         wb.save() 
         #give the app some time to fully close 
         app.quit() 
-        time.sleep(2) 
+        time.sleep(3) 
     return pay_period_total 
 
 for j, user in enumerate(users): 
