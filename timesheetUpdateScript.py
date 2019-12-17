@@ -96,7 +96,7 @@ users = data['user']
 
 email_timesheet_dict = {
                         #"speichel@ceg-engineers.com": "PeichelS.xls",
-                        #"jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
                         #"rduncan@ceg-engineers.com": "DuncanR.xls",
                         #"cdolan@ceg.mn": "DolanC.xls",
                         #"kburk@ceg-engineers.com": "BurkK.xls",
@@ -119,37 +119,8 @@ email_timesheet_dict = {
                         #"jromero@ceg.mn": "RomeroJ.xls",
                         #"dsindelar@ceg-engineers.com": "SindelarD.xls",
                         #"turban@ceg-engineers.com": "UrbanT.xls",
-                        #"yzhang@ceg-engineers.com": "ZhangY.xls"
-                       }
-
-
-email_timesheet_dict = {
-                        "speichel@ceg-engineers.com": "PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
-                        "rduncan@ceg-engineers.com": "DuncanR.xls",
-                        "cdolan@ceg.mn": "DolanC.xls",
-                        "kburk@ceg-engineers.com": "BurkK.xls",
-                        "mkaas@ceg-engineers.com": "KaasM.xls",
-                        "bahlsten@ceg-engineers.com": "AhlstenB.xls",
-                        "mbartholomay@ceg-engineers.com": "BartholomayM.xls",
-                        "dborkovic@ceg-engineers.com": "BorkovicD.xls",
-                        "ebryden@ceg-engineers.com": "BrydenE.xls",
-                        "rbuckingham@ceg-engineers.com": "BuckinghamR.xls",
-                        "jcasanova@ceg-engineers.com": "CasanovaJ.xls",
-                        "schowdhary@ceg-engineers.com": "ChowdharyS.xls",
-                        "vince@ceg.mn": "GranquistV.xls",
-                        "nguddeti@ceg-engineers.com": "GuddetiN.xls",
-                        "siqbal@ceg-engineers.com": "IqbalS.xls",
-                        "ajama@ceg-engineers.com": "JamaA.xls",
-                        "skatz@ceg-engineers.com": "KatzS.xls",
-                        "pmalamen@ceg-engineers.com": "MalamenP.xls",
-                        "jmitchell@ceg-engineers.com": "MitchellJ.xls",
-                        "ntmoe@ceg.mn": "MoeN.xls",
-                        "jromero@ceg.mn": "RomeroJ.xls",
-                        "dsindelar@ceg-engineers.com": "SindelarD.xls",
-                        "turban@ceg-engineers.com": "UrbanT.xls",
-                        "yzhang@ceg-engineers.com": "ZhangY.xls",
-                        "mtuma@ceg-engineers.com": "TumaM.xls"
+                        #"yzhang@ceg-engineers.com": "ZhangY.xls",
+                        #"mtuma@ceg-engineers.com": "TumaM.xls"
                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
@@ -223,7 +194,7 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             app.quit() 
             continue 
         else:
-            #if the sheet isn't protected, we start writing to it
+            #if the sheet isn't protected, we start writing to it            
             #this dictionary will store all of the hours for each project, where the hours dictionary is the value
             # and the key is a tuple of the code and description 
             code_desc_hours_dict = {}
@@ -355,12 +326,14 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             #increment the row count if there are hours for this code in the date range 
             if hours_in_date_range:
                 row_count += 1
-
-        #if we need to check the pay period total, we read from row 70 for the pay period. 
+        
+        #lastly, need to put 'CEG' in  AL17 since it needs to be populated for Donna to send month end
+        sht.range(f'{code_column}17').value == 'CEG'
+        
+        #if we need to check the pay period total, we read from row 70 for the pay period.  
         if not pay_period_sent:
             total_hours_row = 70  
             
-
             def update_pay_period_total(pay_period_total, start_end):
                 current_month_hours = sht.range(f"{letters_to_numbers_dict[start_end[0]]}{total_hours_row}:{letters_to_numbers_dict[start_end[1]]}{total_hours_row}").value 
                 print(current_month_hours) 
@@ -421,12 +394,20 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
                 start_end = (date_range_strings.index(pay_period_date_range[0]), date_range_strings.index(pay_period_date_range[-1])) 
                 pay_period_total = update_pay_period_total(pay_period_total, start_end)
                 print(pay_period_total)
-        #now we're sending the pay period summary no matter what, so do it here
-        #but only if it's the second sheet
-        if s > 0:
+
+        def find_macro_and_send(wb):
             macro = wb.macro('Sendpayperiodsummary')
-            macro()  
-        
+            macro()
+            return None
+
+        #if we have more than one sheet, we submit on the second sheet 
+        if len(sheets) > 1: 
+            if s == 1:  
+                find_macro_and_send(wb)
+        #otherwise, we just submit, since this is the only sheet to submit on 
+        else:
+            find_macro_and_send(wb)
+
         wb.save() 
         #give the app some time to fully close 
         app.quit() 
