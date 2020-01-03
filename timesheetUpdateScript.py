@@ -7,6 +7,9 @@ from dateutil.relativedelta import relativedelta
 import calendar
 import os
 import time
+import pprint
+
+pp = pprint.PrettyPrinter(indent=2)
 
 client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
 #client = MongoClient('mongodb://localhost:9999')
@@ -96,7 +99,7 @@ users = data['user']
 
 email_timesheet_dict = {
                         #"speichel@ceg-engineers.com": "PeichelS.xls",
-                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        #"jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
                         #"rduncan@ceg-engineers.com": "DuncanR.xls",
                         #"cdolan@ceg.mn": "DolanC.xls",
                         #"kburk@ceg-engineers.com": "BurkK.xls",
@@ -115,7 +118,7 @@ email_timesheet_dict = {
                         #"skatz@ceg-engineers.com": "KatzS.xls",
                         #"pmalamen@ceg-engineers.com": "MalamenP.xls",
                         #"jmitchell@ceg-engineers.com": "MitchellJ.xls",
-                        #"ntmoe@ceg.mn": "MoeN.xls",
+                        "ntmoe@ceg.mn": "MoeN.xls",
                         #"jromero@ceg.mn": "RomeroJ.xls",
                         #"dsindelar@ceg-engineers.com": "SindelarD.xls",
                         #"turban@ceg-engineers.com": "UrbanT.xls",
@@ -150,6 +153,7 @@ def get_workbook_and_sheet(sheet_year, user_name, sheet):
     #path = f"H://CEG Timesheets//{sheet_year}//"
     path = f"H://CEG Timesheets//{sheet_year}//"
     full_path = os.path.join(path, user_name)
+    print(full_path) 
     wb = xw.Book(full_path)
     app = xw.apps.active
     sht = wb.sheets[sheet]
@@ -238,22 +242,26 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             #if the code exists, we want to see if it has hours 
             if code != None:
                 code_desc = (code, description)
-                hours = sht.range(f"{letters_to_numbers_dict[date_range[0].day - 1]}{i}:{letters_to_numbers_dict[date_range[-1].day - 1]}{i}").value
+                hours = sht.range(f"{letters_to_numbers_dict[date_range[0].day - 1]}{i}:{letters_to_numbers_dict[date_range[-1].day - 1]}{i}").value 
+                if all(h is None for h in hours):
+                    #if all of the values in the list of hours are none, then there is no time for this code and we can move on 
+                    continue 
                 #if we get hours, we have to find which days have hours
-                #first, check if that code_desc tuple is already in the current data
-                if code_desc not in code_desc_hours_dict:
-                    code_desc_hours_dict[code_desc] = {} 
-                else:
-                    #so, the tuple is in the dictionary
-                    if isinstance(code_desc_hours_dict[code_desc], list):
+                else: 
+                    #first, check if that code_desc tuple is already in the current data
+                    if code_desc not in code_desc_hours_dict:                   
                         code_desc_hours_dict[code_desc] = {} 
-                        for j, hour in enumerate(hours): 
-                            if hour != None:
-                                date = date_range_strings[j]
-                        #old_code_desc_hours_dict[code_desc] = {date: hour}
-                        #go through the newest data to check if these hours already exist in the database
-                        if date not in code_desc_hours_dict[code_desc]:
-                            code_desc_hours_dict[code_desc].update({date:hour})
+            
+                    for j, hour in enumerate(hours):
+                        if hour != None:
+                            date = date_range_strings[j]
+                            if date not in code_desc_hours_dict[code_desc]:
+                                print(code_desc) 
+                                if isinstance(code_desc_hours_dict[code_desc], list):
+                                    code_desc_hours_dict[code_desc] = {}
+                                code_desc_hours_dict[code_desc].update({date:hour})
+
+        pp.pprint(code_desc_hours_dict)
 
         #wipe everything on sheet
 
