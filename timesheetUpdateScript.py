@@ -98,32 +98,32 @@ data = pd.DataFrame(list(coll.find()))
 users = data['user']
 
 email_timesheet_dict = {
-                        #"speichel@ceg-engineers.com": "PeichelS.xls",
-                        #"jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
-                        #"rduncan@ceg-engineers.com": "DuncanR.xls",
-                        #"cdolan@ceg.mn": "DolanC.xls",
-                        #"kburk@ceg-engineers.com": "BurkK.xls",
-                        #"mkaas@ceg-engineers.com": "KaasM.xls",
-                        #"bahlsten@ceg-engineers.com": "AhlstenB.xls",
-                        #"mbartholomay@ceg-engineers.com": "BartholomayM.xls",
-                        #"dborkovic@ceg-engineers.com": "BorkovicD.xls",
-                        #"ebryden@ceg-engineers.com": "BrydenE.xls",
-                        #"rbuckingham@ceg-engineers.com": "BuckinghamR.xls",
-                        #"jcasanova@ceg-engineers.com": "CasanovaJ.xls",
-                        #"schowdhary@ceg-engineers.com": "ChowdharyS.xls",
-                        #"vince@ceg.mn": "GranquistV.xls",
-                        #"nguddeti@ceg-engineers.com": "GuddetiN.xls",
-                        #"siqbal@ceg-engineers.com": "IqbalS.xls",
-                        #"ajama@ceg-engineers.com": "JamaA.xls",
-                        #"skatz@ceg-engineers.com": "KatzS.xls",
-                        #"pmalamen@ceg-engineers.com": "MalamenP.xls",
-                        #"jmitchell@ceg-engineers.com": "MitchellJ.xls",
+                        "speichel@ceg-engineers.com": "PeichelS.xls",
+                        "jmarsnik@ceg-engineers.com": "MarsnikJ.xls",
+                        "rduncan@ceg-engineers.com": "DuncanR.xls",
+                        "cdolan@ceg.mn": "DolanC.xls",
+                        "kburk@ceg-engineers.com": "BurkK.xls",
+                        "mkaas@ceg-engineers.com": "KaasM.xls",
+                        "bahlsten@ceg-engineers.com": "AhlstenB.xls",
+                        "mbartholomay@ceg-engineers.com": "BartholomayM.xls",
+                        "dborkovic@ceg-engineers.com": "BorkovicD.xls",
+                        "ebryden@ceg-engineers.com": "BrydenE.xls",
+                        "rbuckingham@ceg-engineers.com": "BuckinghamR.xls",
+                        "jcasanova@ceg-engineers.com": "CasanovaJ.xls",
+                        "schowdhary@ceg-engineers.com": "ChowdharyS.xls",
+                        "vince@ceg.mn": "GranquistV.xls",
+                        "nguddeti@ceg-engineers.com": "GuddetiN.xls",
+                        "siqbal@ceg-engineers.com": "IqbalS.xls",
+                        "ajama@ceg-engineers.com": "JamaA.xls",
+                        "skatz@ceg-engineers.com": "KatzS.xls",
+                        "pmalamen@ceg-engineers.com": "MalamenP.xls",
+                        "jmitchell@ceg-engineers.com": "MitchellJ.xls",
                         "ntmoe@ceg.mn": "MoeN.xls",
-                        #"jromero@ceg.mn": "RomeroJ.xls",
-                        #"dsindelar@ceg-engineers.com": "SindelarD.xls",
-                        #"turban@ceg-engineers.com": "UrbanT.xls",
-                        #"yzhang@ceg-engineers.com": "ZhangY.xls",
-                        #"mtuma@ceg-engineers.com": "TumaM.xls"
+                        "jromero@ceg.mn": "RomeroJ.xls",
+                        "dsindelar@ceg-engineers.com": "SindelarD.xls",
+                        "turban@ceg-engineers.com": "UrbanT.xls",
+                        "yzhang@ceg-engineers.com": "ZhangY.xls",
+                        "mtuma@ceg-engineers.com": "TumaM.xls"
                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
@@ -256,12 +256,9 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
                         if hour != None:
                             date = date_range_strings[j]
                             if date not in code_desc_hours_dict[code_desc]:
-                                print(code_desc) 
                                 if isinstance(code_desc_hours_dict[code_desc], list):
                                     code_desc_hours_dict[code_desc] = {}
                                 code_desc_hours_dict[code_desc].update({date:hour})
-
-        pp.pprint(code_desc_hours_dict)
 
         #wipe everything on sheet
 
