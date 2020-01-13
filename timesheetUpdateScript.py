@@ -405,14 +405,7 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             macro()
             return None
 
-        #if we have more than one sheet, we submit on the second sheet 
-        if len(sheets) > 1: 
-            if s == 1:  
-                find_macro_and_send(wb)
-        #otherwise, we just submit, since this is the only sheet to submit on 
-        else:
-            find_macro_and_send(wb)
-
+        find_macro_and_send(wb)
         wb.save() 
         #give the app some time to fully close 
         app.quit() 
