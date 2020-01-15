@@ -123,7 +123,8 @@ email_timesheet_dict = {
                         "dsindelar@ceg-engineers.com": "SindelarD.xls",
                         "turban@ceg-engineers.com": "UrbanT.xls",
                         "yzhang@ceg-engineers.com": "ZhangY.xls",
-                        "mtuma@ceg-engineers.com": "TumaM.xls"
+                        "mtuma@ceg-engineers.com": "TumaM.xls",
+                        "lbergstad@ceg-engineers.com": "BergstadL.xls" 
                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
