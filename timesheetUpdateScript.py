@@ -11,8 +11,8 @@ import pprint
 
 pp = pprint.PrettyPrinter(indent=2)
 
-client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
-#client = MongoClient('mongodb://localhost:9999')
+#client = MongoClient('mongodb://heroku_0qcgxhh9:f2qrq05120bug3gh44mfqj2ab4@ds131747.mlab.com:31747/heroku_0qcgxhh9')
+client = MongoClient('mongodb://192.168.99.100:9999')
 
 db = client['heroku_0qcgxhh9']
 
@@ -151,8 +151,8 @@ else:
     is_year_crossover = False
 
 def get_workbook_and_sheet(sheet_year, user_name, sheet):
+    path = f"C://timesheets//{sheet_year}//"
     #path = f"H://CEG Timesheets//{sheet_year}//"
-    path = f"H://CEG Timesheets//{sheet_year}//"
     full_path = os.path.join(path, user_name)
     print(full_path) 
     try: 
