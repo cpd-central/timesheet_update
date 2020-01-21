@@ -155,7 +155,11 @@ def get_workbook_and_sheet(sheet_year, user_name, sheet):
     path = f"H://CEG Timesheets//{sheet_year}//"
     full_path = os.path.join(path, user_name)
     print(full_path) 
-    wb = xw.Book(full_path)
+    try: 
+        wb = xw.Book(full_path)
+    except FileNotFoundError:
+        print(f'No timesheet for {user_name} in this year') 
+        return None 
     app = xw.apps.active
     sht = wb.sheets[sheet]
     return (wb, app, sht)
@@ -189,6 +193,11 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
             sheet_year = year
 
         xw_variables = get_workbook_and_sheet(sheet_year, user_spreadsheet_name, sheet) 
+        if xw_variables == None:
+            #if we don't have any variables, it means that there was no workbook for this user for the given year.
+            # We then move on 
+            continue
+        #otherwise, we write as normal
         wb = xw_variables[0]
         app = xw_variables[1]   
         sht = xw_variables[2] 
