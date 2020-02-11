@@ -40,21 +40,21 @@ def update_reference_list():
 
     df_drop_columns = df.drop(columns=columns_to_drop)
     df_drop_na = df_drop_columns.dropna()
-
-    code_desc_dict = {}
     
+    code_desc_dict = {}
+        
     for index, row in df_drop_na.iterrows():
         code_desc_dict[row['Code']] = row['Name']
 
-        #updates the reference list in the database.
+    #updates the reference list in the database.
         coll.update_one({
             'name': "reference_list"
-        }, {
+    }, {    
             '$set': {
                 'codes': code_desc_dict
             }
-        }, upsert=False)
-    
+    }, upsert=False)
+        
     return None
 
 def is_last_day_of_month(today):
@@ -124,7 +124,8 @@ email_timesheet_dict = {
                         "turban@ceg-engineers.com": "UrbanT.xls",
                         "yzhang@ceg-engineers.com": "ZhangY.xls",
                         "mtuma@ceg-engineers.com": "TumaM.xls",
-                        "lbergstad@ceg-engineers.com": "BergstadL.xls" 
+                        "lbergstad@ceg-engineers.com": "BergstadL.xls",
+                        "jcarlson@ceg-engineers.com": "CarlsonJ.xls",
                        }
 
 part_time_users = ["bahlsten@ceg-engineers.com", "schowdhary@ceg-engineers.com", "pmalamen@ceg-engineers.com"] 
@@ -245,30 +246,30 @@ def write_to_spreadsheet(user_spreadsheet_name, sheets, month_end, user_data, pa
         ##get the old data and put it into the code_desc_hours_dict before we wipe
 
         #row_count starts at 17 since that's where the descriptions start
-        row_count = 17
-        for i in range(row_count, 70):
-            code = sht.range(f"AL{i}").value
-            description = sht.range(f"A{i}").value
-            #if the code exists, we want to see if it has hours 
-            if code != None:
-                code_desc = (code, description)
-                hours = sht.range(f"{letters_to_numbers_dict[date_range[0].day - 1]}{i}:{letters_to_numbers_dict[date_range[-1].day - 1]}{i}").value 
-                if all(h is None for h in hours):
-                    #if all of the values in the list of hours are none, then there is no time for this code and we can move on 
-                    continue 
-                #if we get hours, we have to find which days have hours
-                else: 
-                    #first, check if that code_desc tuple is already in the current data
-                    if code_desc not in code_desc_hours_dict:                   
-                        code_desc_hours_dict[code_desc] = {} 
-            
-                    for j, hour in enumerate(hours):
-                        if hour != None:
-                            date = date_range_strings[j]
-                            if date not in code_desc_hours_dict[code_desc]:
-                                if isinstance(code_desc_hours_dict[code_desc], list):
-                                    code_desc_hours_dict[code_desc] = {}
-                                code_desc_hours_dict[code_desc].update({date:hour})
+        #row_count = 17
+        #for i in range(row_count, 70):
+        #    code = sht.range(f"AL{i}").value
+        #    description = sht.range(f"A{i}").value
+        #    #if the code exists, we want to see if it has hours 
+        #    if code != None:
+        #        code_desc = (code, description)
+        #        hours = sht.range(f"{letters_to_numbers_dict[date_range[0].day - 1]}{i}:{letters_to_numbers_dict[date_range[-1].day - 1]}{i}").value 
+        #        if all(h is None for h in hours):
+        #            #if all of the values in the list of hours are none, then there is no time for this code and we can move on 
+        #            continue 
+        #        #if we get hours, we have to find which days have hours
+        #        else: 
+        #            #first, check if that code_desc tuple is already in the current data
+        #            if code_desc not in code_desc_hours_dict:                   
+        #                code_desc_hours_dict[code_desc] = {} 
+        #    
+        #            for j, hour in enumerate(hours):
+        #                if hour != None:
+        #                    date = date_range_strings[j]
+        #                    if date not in code_desc_hours_dict[code_desc]:
+        #                        if isinstance(code_desc_hours_dict[code_desc], list):
+        #                            code_desc_hours_dict[code_desc] = {}
+        #                        code_desc_hours_dict[code_desc].update({date:hour})
 
         #wipe everything on sheet
 
