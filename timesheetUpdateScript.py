@@ -30,7 +30,7 @@ first_payperiod_end = datetime.datetime(2019, 8, 25)
 
 def update_reference_list():
 
-    fp = f"H://CEG Timesheets//{year}//CEG Project List.xls"
+    fp = f"Z://CEG//Timesheets//CEG Timesheets//{year}//CEG Project List.xls"
     sheet = "Open Projects"
 
     df = pd.read_excel(fp, sheet_name=sheet, header=1)
@@ -153,7 +153,7 @@ else:
 
 def get_workbook_and_sheet(sheet_year, user_name, sheet):
     #path = f"H://CEG Timesheets//{sheet_year}//"
-    path = f"H://CEG Timesheets//{sheet_year}//"
+    path = f"Z://CEG//Timesheets//CEG Timesheets//{sheet_year}//"
     full_path = os.path.join(path, user_name)
     print(full_path) 
     try: 
