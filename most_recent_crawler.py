@@ -7,7 +7,7 @@ import calendar
 
 #in case the spreadsheet is missing projects
 #between the master and the spreadsheet itself, we should have everything
-master_fp = r'H:\CEG Timesheets\CEG Projects Master.xls'
+master_fp = r'Z:\CEG\Timesheets\CEG Timesheets\CEG Projects Master.xls'
 master_df = pd.read_excel(master_fp)
 master_ser = master_df['ACTIVITY']
 
@@ -23,7 +23,7 @@ def get_newest_hours():
 
     year = str(today.year)
 
-    fp = f'H://CEG Timesheets//{year}//{year} Hours by Project.xlsx'
+    fp = f'Z://CEG//Timesheets//CEG Timesheets//{year}//{year} Hours by Project.xlsx'
 
     projects_df = pd.read_excel(fp, sheet_name='YTD by Person by Project', header=2)
     projects_ser = projects_df['Project'].dropna()
