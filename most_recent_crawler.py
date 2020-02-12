@@ -76,9 +76,9 @@ def get_newest_hours():
         coll = db['projects']
         all_hours_coll = db['hours_by_project']
 
-        coll.update_one({'projectcode': code}, {'$set': {f'hours_data.{year}': existing_months_dict}})
+        coll.update_many({'projectcode': code}, {'$set': {f'hours_data.{year}': existing_months_dict}})
 
-        all_hours_coll.update_one({'code': code}, {'$set': {f'hours_data.{year}': existing_months_dict}}, upsert=True)
+        all_hours_coll.update_many({'code': code}, {'$set': {f'hours_data.{year}': existing_months_dict}}, upsert=True)
     wb.save() 
     app.quit() 
     #coll.insert_one({'hello': 'world'})
